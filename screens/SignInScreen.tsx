@@ -14,13 +14,32 @@ import { sendData } from "../httpRequests";
 import asyncStorage from "@react-native-async-storage/async-storage";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
-import { transformObjetToFormData } from "../utils";
+import { checkStorage, hideLoadingModal, showErrorToast, transformObjetToFormData } from "../utils";
 import { ApiResponse } from "../types";
 
 export default function SignInScreen({ navigation }: any) {
   const [showLoading, setShowLoading] = useState<boolean>(false);
   const [errorMesage, setErrorMesage] = useState<String>("");
   const [error, setError] = useState<boolean>(false);
+  const [showLogin, setShowLogin] = useState<boolean>(false);
+
+  useEffect(() => {
+    checkStorage("USER_DATA", (response: string) => {
+      if (!!response) {
+        navigation.reset({
+          index: 0,
+          routes: [
+            {
+              name: "Root",
+              screen: "Home",
+            },
+          ],
+        });
+      } else {
+        setShowLogin(true);
+      }
+    });
+  }, []);
 
   const onSignIn = (values: object) => {
     setShowLoading(true);
@@ -35,31 +54,18 @@ export default function SignInScreen({ navigation }: any) {
         console.log(response);
         if (response.exito) {
           setAuthUser(response.datos);
-          console.log(response.datos)
+          console.log(response.datos);
         } else {
           setError(true);
           setErrorMesage(response.mensaje);
         }
-      });
-    });
-  };
-
-  const hideLoadingModal = (callback: Function) => {
-      setShowLoading(false);
-      callback();
-  };
-
-  const showErrorToast = (message: string) => {
-    Toast.show(message, {
-      duration: Toast.durations.LONG,
-      containerStyle: { backgroundColor: "red", width: "80%" },
+      }, setShowLoading);
     });
   };
 
   const setAuthUser = (data: any[]) => {
     asyncStorage.setItem("USER_DATA", data.toString());
-    navigation.navigate('Home')
-    
+    navigation.navigate("Home");
   };
 
   function InputPassword({ handleChange, handleBlur, value }: any) {
@@ -101,93 +107,95 @@ export default function SignInScreen({ navigation }: any) {
 
   return (
     <Container keyboard={false}>
-      <>
-        <HeaderComponent screen="signin" navigation={navigation} />
-        <Loading showLoading={showLoading} />
-        <View style={styles.body}>
-          <Text style={styles.title}>Login</Text>
-          <Formik
-            initialValues={{ cedula: "40229298068", clave: "Test123456" }}
-            onSubmit={(values) => onSignIn(values)}
-          >
-            {({ handleChange, handleBlur, handleSubmit, values }) => (
-              <>
-                <Text style={styles.labelInput}>Cedula</Text>
-                <TextInput
-                  style={styles.textInput}
-                  onChangeText={handleChange("cedula")}
-                  onBlur={handleBlur("cedula")}
-                  value={values.cedula}
-                  autoCapitalize={"none"}
-                />
-                <InputPassword
-                  handleChange={handleChange}
-                  handleBlur={handleBlur}
-                  value={values.clave}
-                />
+      {showLogin && (
+        <>
+          <HeaderComponent screen="signin" navigation={navigation} />
+          <Loading showLoading={showLoading} />
+          <View style={styles.body}>
+            <Text style={styles.title}>Login</Text>
+            <Formik
+              initialValues={{ cedula: "40229298068", clave: "Test123456" }}
+              onSubmit={(values) => onSignIn(values)}
+            >
+              {({ handleChange, handleBlur, handleSubmit, values }) => (
+                <>
+                  <Text style={styles.labelInput}>Cedula</Text>
+                  <TextInput
+                    style={styles.textInput}
+                    onChangeText={handleChange("cedula")}
+                    onBlur={handleBlur("cedula")}
+                    value={values.cedula}
+                    autoCapitalize={"none"}
+                  />
+                  <InputPassword
+                    handleChange={handleChange}
+                    handleBlur={handleBlur}
+                    value={values.clave}
+                  />
 
-                {error && (
-                  <View
-                    style={{
-                      alignItems: "center",
-                      backgroundColor: "#FDC0C6",
-                      paddingVertical: 20,
-                      borderRadius: 5,
-                      borderLeftWidth: 8,
-                      borderColor: "#FC808E",
-                      borderRightWidth: 8,
-                    }}
-                  >
-                    <Text
+                  {error && (
+                    <View
                       style={{
-                        color: "#C10516",
-                        fontWeight: "bold",
-                        fontSize: 17,
+                        alignItems: "center",
+                        backgroundColor: "#FDC0C6",
+                        paddingVertical: 20,
+                        borderRadius: 5,
+                        borderLeftWidth: 8,
+                        borderColor: "#FC808E",
+                        borderRightWidth: 8,
                       }}
                     >
-                      {errorMesage}
+                      <Text
+                        style={{
+                          color: "#C10516",
+                          fontWeight: "bold",
+                          fontSize: 17,
+                        }}
+                      >
+                        {errorMesage}
+                      </Text>
+                    </View>
+                  )}
+
+                  <TouchableOpacity
+                    style={styles.loginButton}
+                    onPress={() => handleSubmit()}
+                  >
+                    <Text style={styles.loginButtonText}>Inicia sesión</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={{ alignItems: "center" }}
+                    onPress={() => navigation.navigate("ForgotPassword")}
+                  >
+                    <Text style={styles.registerLink}>
+                      ¿Olvidaste tu contraseña?
+                    </Text>
+                  </TouchableOpacity>
+
+                  <View
+                    style={{
+                      flexDirection: "row",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      marginTop: 20,
+                    }}
+                  >
+                    <Text style={styles.registerText}>
+                      ¿No tienes una cuenta?
+                    </Text>
+                    <Text
+                      style={styles.registerLink}
+                      onPress={() => navigation.navigate("SignUp")}
+                    >
+                      Registrate
                     </Text>
                   </View>
-                )}
-
-                <TouchableOpacity
-                  style={styles.loginButton}
-                  onPress={() => handleSubmit()}
-                >
-                  <Text style={styles.loginButtonText}>Inicia sesión</Text>
-                </TouchableOpacity>
-                <TouchableOpacity
-                  style={{ alignItems: "center" }}
-                  onPress={() => navigation.navigate("ForgotPassword")}
-                >
-                  <Text style={styles.registerLink}>
-                    ¿Olvidaste tu contraseña?
-                  </Text>
-                </TouchableOpacity>
-
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginTop: 20,
-                  }}
-                >
-                  <Text style={styles.registerText}>
-                    ¿No tienes una cuenta?
-                  </Text>
-                  <Text
-                    style={styles.registerLink}
-                    onPress={() => navigation.navigate("SignUp")}
-                  >
-                    Registrate
-                  </Text>
-                </View>
-              </>
-            )}
-          </Formik>
-        </View>
-      </>
+                </>
+              )}
+            </Formik>
+          </View>
+        </>
+      )}
     </Container>
   );
 }

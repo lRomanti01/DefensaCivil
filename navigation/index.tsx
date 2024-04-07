@@ -12,16 +12,23 @@ import {
 } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as React from "react";
-import { ColorSchemeName, View, Linking, Alert, Image } from "react-native";
 import SignInScreen from "../screens/SignInScreen";
 import SignUpScreen from "../screens/SignUpScreen";
-
+import LinkingConfiguration from "./LinkingConfiguration";
 import { RootStackParamList, RootTabParamList } from "../types";
 import HomeScreen from "../screens/HomeScreen";
+import { ColorSchemeName } from "react-native";
 
-export default function Navigation() {
+export default function Navigation({
+  colorScheme,
+}: {
+  colorScheme: ColorSchemeName;
+}) {
   return (
-    <NavigationContainer>
+    <NavigationContainer
+      linking={LinkingConfiguration}
+      theme={colorScheme === "dark" ? DarkTheme : DefaultTheme}
+    >
       <RootNavigator />
     </NavigationContainer>
   );
@@ -52,11 +59,11 @@ function RootNavigator() {
         options={{ headerShown: false, animation: "slide_from_right" }}
       />
 
-      <Stack.Screen
+      {/* <Stack.Screen
         name="Home"
         component={HomeScreen}
         options={{ headerShown: false, animation: "slide_from_right" }}
-      />
+      /> */}
 
       <Stack.Screen
         name="Root"
@@ -94,6 +101,7 @@ function BottomTabNavigator({ navigation, route }: any) {
           title: "Inicio",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
         }}
+        initialParams={route.params}
       />
     </BottomTab.Navigator>
   );

@@ -19,7 +19,7 @@ import asyncStorage from "@react-native-async-storage/async-storage";
 import Container from "../components/Container";
 import Loading from "../components/Loading";
 import { ApiResponse } from "../types";
-import { transformObjetToFormData } from "../utils";
+import { showErrorToast, transformObjetToFormData } from "../utils";
 
 interface registerData {
   cedula: string;
@@ -94,13 +94,6 @@ export default function SignUpScreen({ navigation }: any) {
   const hideLoadingModal = (callback: Function) => {
     setShowLoading(false);
     callback();
-  };
-
-  const showErrorToast = (message: string) => {
-    Toast.show(message, {
-      duration: Toast.durations.LONG,
-      containerStyle: { backgroundColor: "red", width: "80%" },
-    });
   };
 
   function InputPassword({

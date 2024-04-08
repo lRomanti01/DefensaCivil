@@ -64,8 +64,11 @@ export default function SignInScreen({ navigation }: any) {
   };
 
   const setAuthUser = (data: any[]) => {
-    asyncStorage.setItem("USER_DATA", data.toString());
-    navigation.navigate("Home");
+    asyncStorage.setItem("USER_DATA", JSON.stringify(data));
+    navigation.reset({
+      index: 0,
+      routes: [{ name: "Root" }],
+    });
   };
 
   function InputPassword({ handleChange, handleBlur, value }: any) {

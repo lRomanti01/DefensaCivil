@@ -18,6 +18,11 @@ import LinkingConfiguration from "./LinkingConfiguration";
 import { RootStackParamList, RootTabParamList } from "../types";
 import HomeScreen from "../screens/HomeScreen";
 import { ColorSchemeName } from "react-native";
+import MemberScreen from "../screens/MemberScreen";
+import ProfileScreen from "../screens/ProfileScreen";
+import ServiceScreen from "../screens/ServiceScreen";
+import NoticiasScreen from "../screens/NoticiasScreen";
+import VideosScreen from "../screens/VideosScreen";
 
 export default function Navigation({
   colorScheme,
@@ -59,11 +64,45 @@ function RootNavigator() {
         options={{ headerShown: false, animation: "slide_from_right" }}
       />
 
-      {/* <Stack.Screen
-        name="Home"
-        component={HomeScreen}
-        options={{ headerShown: false, animation: "slide_from_right" }}
-      /> */}
+      <Stack.Screen
+        name="ServiceScreen"
+        component={ServiceScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Servicios",
+        }}
+      />
+
+      <Stack.Screen
+        name="MemberScreen"
+        component={MemberScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Miembros",
+        }}
+      />
+
+      <Stack.Screen
+        name="NoticiasScreen"
+        component={NoticiasScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Noticias",
+        }}
+      />
+
+      <Stack.Screen
+        name="VideosScreen"
+        component={VideosScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Videos",
+        }}
+      />
 
       <Stack.Screen
         name="Root"
@@ -86,7 +125,7 @@ function BottomTabNavigator({ navigation, route }: any) {
     <BottomTab.Navigator
       initialRouteName="Home"
       screenOptions={{
-        tabBarActiveTintColor: "#5f7ceb",
+        tabBarActiveTintColor: "#EB7508",
         tabBarStyle: {
           backgroundColor: "#fff",
           borderTopColor: "rgba(0, 0, 0, 0.1)",
@@ -100,6 +139,17 @@ function BottomTabNavigator({ navigation, route }: any) {
           headerShown: false,
           title: "Inicio",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        }}
+        initialParams={route.params}
+      />
+
+      <BottomTab.Screen
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          headerShown: false,
+          title: "Perfil",
+          tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}
         initialParams={route.params}
       />

@@ -1,5 +1,6 @@
 {
     "conventionalCommits.scopes": [
-        "React navigation"
+        "React navigation",
+        "Screens"
     ]
 }

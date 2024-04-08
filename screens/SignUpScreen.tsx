@@ -88,7 +88,7 @@ export default function SignUpScreen({ navigation }: any) {
   };
 
   const setAuthUser = (data: any[]) => {
-    asyncStorage.setItem("USER_DATA", data.toString());
+    asyncStorage.setItem("USER_DATA", JSON.stringify(data));
   };
 
   const hideLoadingModal = (callback: Function) => {

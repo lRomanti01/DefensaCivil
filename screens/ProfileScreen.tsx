@@ -50,11 +50,7 @@ export default function ProfileScreen({ navigation, route }: any) {
     });
   };
   return (
-    <Container>
-      <View style={{ marginTop: 15 }}>
-        <Header />
-      </View>
-      
+    <Container>      
       <Loading showLoading={showLoading} />
       <Text style={styles.title}>Mi cuenta</Text>
       <View style={styles.header}>
@@ -91,7 +87,7 @@ export default function ProfileScreen({ navigation, route }: any) {
         <View>
           <TouchableOpacity
             style={styles.option}
-            onPress={() => navigation.navigate("Notification")}
+            onPress={() => navigation.navigate("ChangePasswordScreen")}
           >
             <Text style={styles.optionText}>Cambiar clave</Text>
             <AntDesign style={styles.optionIcon} name="right" size={16} />

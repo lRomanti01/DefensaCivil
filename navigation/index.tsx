@@ -25,6 +25,7 @@ import NoticiasScreen from "../screens/NoticiasScreen";
 import VideosScreen from "../screens/VideosScreen";
 import PrecautionariesScreen from "../screens/PrecautionariesScreen";
 import AboutUsScreen from "../screens/AboutUsScreen";
+import ChangePasswordScreen from "../screens/ChangePasswordScreen";
 
 export default function Navigation({
   colorScheme,
@@ -113,6 +114,16 @@ function RootNavigator() {
           headerShown: true,
           animation: "slide_from_right",
           title: "Medidas preventivas",
+        }}
+      />
+
+<Stack.Screen
+        name="ChangePasswordScreen"
+        component={ChangePasswordScreen}
+        options={{
+          headerShown: false,
+          animation: "slide_from_right",
+          title: "Cambiar contraseña",
         }}
       />
 

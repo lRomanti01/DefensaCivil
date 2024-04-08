@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -10,22 +10,13 @@ import {
 import Container from "../components/Container";
 import Header from "../components/Header";
 import AdsContainer from "../components/AdsContainer";
-import { fetchData } from "../httpRequests";
-import { ApiResponse } from "../types";
-import { showErrorToast } from "../utils";
-interface Member {
-    id: number;
-    nombre: string;
-    cargo: number;
-    foto: string;
-  }
 
 export default function HomeScreen({ navigation }) {
   const MenuItems = [
     {
-      name: "Inicio",
+      name: "Acciones",
       router: "",
-      image: require("../assets/images/hogar.png"),
+      image: require("../assets/images/accion.png"),
     },
     {
       name: "Historia",
@@ -59,7 +50,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       name: "Medidas Preventivas",
-      router: "",
+      router: "PrecautionariesScreen",
       image: require("../assets/images/advertencia.png"),
     },
     {

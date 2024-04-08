@@ -22,6 +22,7 @@ export type RootStackParamList = {
   ServiceScreen: undefined;
   NoticiasScreen: undefined;
   VideosScreen: undefined;
+  PrecautionariesScreen: undefined;
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<
@@ -32,6 +33,7 @@ export type RootStackScreenProps<Screen extends keyof RootStackParamList> = Nati
 export type RootTabParamList = {
   Home: undefined;
   Profile: undefined;
+  AboutUs: undefined;
 };
 
 export type RootTabScreenProps<Screen extends keyof RootTabParamList> = CompositeScreenProps<

@@ -23,6 +23,8 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ServiceScreen from "../screens/ServiceScreen";
 import NoticiasScreen from "../screens/NoticiasScreen";
 import VideosScreen from "../screens/VideosScreen";
+import PrecautionariesScreen from "../screens/PrecautionariesScreen";
+import AboutUsScreen from "../screens/AboutUsScreen";
 
 export default function Navigation({
   colorScheme,
@@ -105,6 +107,16 @@ function RootNavigator() {
       />
 
       <Stack.Screen
+        name="PrecautionariesScreen"
+        component={PrecautionariesScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Medidas preventivas",
+        }}
+      />
+
+      <Stack.Screen
         name="Root"
         component={BottomTabNavigator}
         options={{ headerShown: false }}
@@ -139,6 +151,17 @@ function BottomTabNavigator({ navigation, route }: any) {
           headerShown: false,
           title: "Inicio",
           tabBarIcon: ({ color }) => <TabBarIcon name="home" color={color} />,
+        }}
+        initialParams={route.params}
+      />
+
+      <BottomTab.Screen
+        name="AboutUs"
+        component={AboutUsScreen}
+        options={{
+          headerShown: false,
+          title: "Acerca de nosotros",
+          tabBarIcon: ({ color }) => <TabBarIcon name="person" color={color} />,
         }}
         initialParams={route.params}
       />

@@ -111,7 +111,7 @@ export default function VideosScreen() {
                 <Text
                   style={[
                     styles.optionText,
-                    { fontWeight: "600", marginTop: 10, color: "gray" },
+                    { fontWeight: "600", marginVertical: 10, color: "gray" },
                   ]}
                 >
                   {item.fecha}

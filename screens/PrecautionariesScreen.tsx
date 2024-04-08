@@ -13,34 +13,34 @@ import { hideLoadingModal, showErrorToast } from "../utils";
 import { ApiResponse } from "../types";
 import Loading from "../components/Loading";
 
-interface Services {
+interface Precautionaries {
   id: number;
-  nombre: string;
+  titulo: string;
   descripcion: string;
   foto: string;
 }
 
-export default function ServiceScreen() {
+export default function PrecautionariesScreen() {
   const [showLoading, setShowLoading] = useState<boolean>(false);
-  const [services, setServices] = useState<Services[]>([]);
+  const [precautionaries, setPrecautionaries] = useState<Precautionaries[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
 
   useEffect(() => {
     setShowLoading(true);
 
     setTimeout(() => {
-        hideLoadingModal(() => {
-          getMembers();
-        }, setShowLoading);
-    }, 100)
+      hideLoadingModal(() => {
+        getPrecautionaries();
+      }, setShowLoading);
+    }, 100);
   }, []);
 
-  const getMembers = () => {
+  const getPrecautionaries = () => {
     setFetching(true);
-    const url = "def/servicios.php";
+    const url = "def/medidas_preventivas.php";
     fetchData(url).then((response: ApiResponse) => {
       if (response.exito) {
-        setServices(response.datos);
+        setPrecautionaries(response.datos);
         setFetching(false);
       } else {
         showErrorToast("Error al cargar datos");
@@ -64,52 +64,38 @@ export default function ServiceScreen() {
           marginTop: 40,
         }}
       >
-        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Servicios</Text>
+        <Text style={{ fontSize: 20, fontWeight: "bold" }}>Medidas preventivas</Text>
       </View>
 
       <View style={styles.body}>
         <FlatList
-          data={services}
+          data={precautionaries}
           numColumns={1}
           refreshing={fetching}
-          onRefresh={() => getMembers()}
+          onRefresh={() => getPrecautionaries()}
           renderItem={({ item }) => (
             <View style={styles.option}>
               <View
                 style={{
-                  justifyContent: "center",
-                  alignItems: "center",
-                  width: "20%",
+                  paddingHorizontal: 5,
                 }}
               >
+                <Text style={[styles.optionText, { fontWeight: "bold", textAlign: "center" }]}>
+                  {item.titulo}
+                </Text>
+
                 <View
                   style={{
-                    borderWidth: 1,
-                    borderColor: "rgba(0, 0, 0, 0.2)",
-                    borderRadius: 100,
-                    justifyContent: "center",
-                    marginBottom: 10
+                    width: "100%",
                   }}
                 >
                   <ImageBackground
                     source={{ uri: item.foto }}
-                    style={styles.profilePicture}
-                    resizeMode={"cover"}
-                    imageStyle={{ borderRadius: 100 }}
-                  ></ImageBackground>
+                    style={styles.newPicture}
+                    resizeMode={"center"}
+                  />
                 </View>
-              </View>
-              <View
-                style={{
-                  gap: 10,
-                  paddingHorizontal: 10,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Text style={[styles.optionText, { fontWeight: "bold" }]}>
-                  {item.nombre}
-                </Text>
+
                 <Text
                   style={[
                     styles.optionText,
@@ -137,23 +123,17 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#F7F7F7",
     paddingVertical: 15,
-    paddingHorizontal: 20,
-    borderColor: "#D4D5D5",
-    borderWidth: 1,
-    borderRadius: 10,
+    paddingHorizontal: 5,
     minWidth: 300,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.3,
-    shadowRadius: 2,
     marginVertical: 10,
+    borderBottomColor: "gray",
+    borderBottomWidth: 1
   },
-  profilePicture: {
-    height: 80,
-    width: 80,
-    borderRadius: 100,
+  newPicture: {
+    height: 150,
+    width: "100%",
+    backgroundColor: "black",
   },
   optionText: {
     fontSize: 16,

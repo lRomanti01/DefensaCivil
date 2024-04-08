@@ -31,6 +31,7 @@ export default function ProfileScreen({ navigation, route }: any) {
   useEffect(() => {
     checkStorage("USER_DATA", (data: string) => {
       setUser(JSON.parse(data));
+      console.log(data)
     });
   }, []);
 
@@ -57,49 +58,46 @@ export default function ProfileScreen({ navigation, route }: any) {
       <Loading showLoading={showLoading} />
       <Text style={styles.title}>Mi cuenta</Text>
       <View style={styles.header}>
-        <TouchableOpacity
-          style={{
-            borderWidth: 1,
-            borderColor: "rgba(0, 0, 0, 0.2)",
-            borderRadius: 100,
-          }}
-        >
-          <ImageBackground
-            source={profileImage}
-            style={styles.profilePicture}
-            resizeMode={"cover"}
-            imageStyle={{ borderRadius: 100 }}
-          ></ImageBackground>
-        </TouchableOpacity>
-        <View style={{ marginLeft: 15 }}>
-          {user && (
-            <>
-              <Text style={styles.profileText}>{user.nombre}</Text>
-              <Text style={styles.profileText}>{user.correo}</Text>
-            </>
-          )}
-        </View>
+      <TouchableOpacity
+            style={{
+              borderWidth: 1,
+              borderColor: "rgba(0, 0, 0, 0.2)",
+              borderRadius: 100,
+            }}
+          >
+            <ImageBackground
+              source={!!profileImage ? profileImage : null}
+              style={styles.profilePicture}
+              resizeMode={"cover"}
+              imageStyle={{ borderRadius: 100 }}
+            />
+          </TouchableOpacity>
+  
+          {user && <View style={{ gap: 10, marginTop: 10, justifyContent: "center" }}>
+            <Text style={styles.profileName}>{user.nombre} {user.apellido}</Text>
+            <View
+              style={{
+                alignItems: "center",
+                gap: 10,
+                justifyContent: "center"
+              }}
+            >
+              <Text style={styles.profileInfo}>{user.telefono}</Text>
+              <Text style={styles.profileInfo}>{user.correo}</Text>
+            </View>
+          </View>}
       </View>
       <ScrollView style={styles.body}>
         <View>
-          <Pressable
-            style={styles.option}
-            onPress={() =>
-              navigation.navigate("UpdateUser", { userData: user })
-            }
-          >
-            <Text style={styles.optionText}>Mi información</Text>
-            <AntDesign style={styles.optionIcon} name="right" size={16} />
-          </Pressable>
-          <Pressable
+          <TouchableOpacity
             style={styles.option}
             onPress={() => navigation.navigate("Notification")}
           >
             <Text style={styles.optionText}>Cambiar clave</Text>
             <AntDesign style={styles.optionIcon} name="right" size={16} />
-          </Pressable>
+          </TouchableOpacity>
 
-          <Pressable
+          <TouchableOpacity
             style={styles.option}
             onPress={() => {
               logout();
@@ -107,7 +105,7 @@ export default function ProfileScreen({ navigation, route }: any) {
           >
             <Text style={styles.optionText}>Salir</Text>
             <AntDesign style={styles.optionIcon} name="right" size={16} />
-          </Pressable>
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </Container>
@@ -117,20 +115,31 @@ export default function ProfileScreen({ navigation, route }: any) {
 const styles = StyleSheet.create({
   body: {
     flex: 1,
+    marginTop: 10
   },
   title: {
-    marginTop: 30,
+      fontSize: 25,
+      color: "#000",
+      fontWeight: "bold",
+      marginBottom: 20,
+      textAlign: "center",
+      marginTop: 25
+  },
+  profileName: {
     fontSize: 20,
-    textAlign: "center",
-    fontWeight: "700",
+    color: "#000",
+    fontWeight: "500",
+  },
+  profileInfo: {
+    color: "gray",
+    fontSize: 15,
+    fontWeight: "300",
   },
   header: {
-    flexDirection: "row",
+    flexDirection: "column",
     paddingHorizontal: 30,
-    paddingBottom: 20,
     alignItems: "center",
-    borderBottomColor: "rgba(0, 0, 0, 0.1)",
-    borderBottomWidth: 1,
+    justifyContent: "center",
   },
   profilePicture: {
     height: 70,

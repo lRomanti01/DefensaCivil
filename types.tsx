@@ -24,6 +24,7 @@ export type RootStackParamList = {
   VideosScreen: undefined;
   PrecautionariesScreen: undefined;
   ChangePasswordScreen: undefined;
+  HistoriaScreen: undefined
 };
 
 export type RootStackScreenProps<Screen extends keyof RootStackParamList> = NativeStackScreenProps<

@@ -30,6 +30,27 @@ const fetchData = async (url: string) => {
 
 const sendData = async (url: string, data: object) => {
   try {
+    
+    const requestOptions = {
+      method: "POST",
+      body: data,
+      redirect: "follow"
+    };
+      
+    const response = await fetch(baseUrl + url, requestOptions) 
+    if (!response.ok) {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+  
+    const responseData = await response.json();
+
+    return responseData;
+  } catch (error) {
+    
+    return error;
+  }
+
+  /* try {
     const configuration: Configuration = {
       method: "post",
       url: `${baseUrl}` + url,
@@ -40,7 +61,8 @@ const sendData = async (url: string, data: object) => {
     return response.data;
   } catch (error: any) {
     return error
-  }
+  } */
+  
 };
 
 const sendDataPut = async (url: string, data: {}) => {

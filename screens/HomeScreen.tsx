@@ -20,7 +20,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       name: "Historia",
-      router: "",
+      router: "HistoriaScreen",
       image: require("../assets/images/historia.png"),
     },
     {

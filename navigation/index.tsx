@@ -23,6 +23,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 import ServiceScreen from "../screens/ServiceScreen";
 import NoticiasScreen from "../screens/NoticiasScreen";
 import HistoriaScreen from "../screens/HistoriaScreen";
+import AlbergueScreen from "../screens/AlbergueScreen";
 import VideosScreen from "../screens/VideosScreen";
 import PrecautionariesScreen from "../screens/PrecautionariesScreen";
 import AboutUsScreen from "../screens/AboutUsScreen";
@@ -104,6 +105,15 @@ function RootNavigator() {
           headerShown: true,
           animation: "slide_from_right",
           title: "Historia",
+        }}
+      />
+      <Stack.Screen
+        name="AlbergueScreen"
+        component={AlbergueScreen}
+        options={{
+          headerShown: true,
+          animation: "slide_from_right",
+          title: "Albergue",
         }}
       />
 

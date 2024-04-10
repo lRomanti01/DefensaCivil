@@ -40,7 +40,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       name: "Albergues",
-      router: "",
+      router: "AlbergueScreen",
       image: require("../assets/images/albergue.png"),
     },
     {

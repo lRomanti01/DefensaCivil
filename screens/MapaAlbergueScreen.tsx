@@ -15,6 +15,7 @@ import { fetchData } from "../httpRequests";
 import { hideLoadingModal, showErrorToast } from "../utils";
 import { ApiResponse } from "../types";
 import Loading from "../components/Loading";
+import MapView, { Marker } from "react-native-maps";
 
 interface News {
   ciudad: string,
@@ -23,12 +24,12 @@ interface News {
   coordinador: string,
   telefono: string,
   capacidad: string,
-  lat: string,
-  lng: string
+  lat: number,
+  lng: number
 }
 
-export default function NoticiasScreen() {
-  const [showLoading, setShowLoading] = useState<boolean>(false);
+export default function MapaAlbergueScreen() {
+  const [showLoading, setShowLoading] = useState<boolean>(true);
   const [news, setNews] = useState<News[]>([]);
   const [fetching, setFetching] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState('');
@@ -90,66 +91,43 @@ export default function NoticiasScreen() {
         <Text style={{ fontSize: 20, fontWeight: "bold" }}>Albergues</Text>
       </View>
       <TextInput
-      style={{
-        width:"90%",
-        marginHorizontal:10,
-        paddingHorizontal:10,
-        borderWidth:1,
-        borderRadius:10
+        style={{
+          width: "90%",
+          marginHorizontal: 10,
+          paddingHorizontal: 10,
+          borderWidth: 1,
+          borderRadius: 10
 
-      }}
+        }}
         placeholder="Buscar edificio..."
         onChangeText={handleSearch}
         value={searchQuery}
       />
 
       <View style={styles.body}>
-        <FlatList
-          data={filteredDatos}
-          numColumns={1}
-          refreshing={fetching}
-          onRefresh={() => getNews()}
-          renderItem={({ item }) => (
-            <View style={styles.option}>
-              <View
-                style={{
-                  paddingHorizontal: 5,
-                }}
-              >
-                <Text style={[styles.optionText, { fontWeight: "bold", textAlign: "center" }]}>
-                  {item.ciudad}
-                </Text>
-
-                <View
-                  style={{
-                    width: "80%",
-                    flexDirection: "column",
-                    gap: 5,
-                  }}
-                >
-                  <Text>Edificio: {item.edificio}</Text>
-                  <Text>Coordinador: {item.coordinador}</Text>
-                  <Text>Telefono: {item.telefono}</Text>
-                  <Text>Capacidad: {item.capacidad !== "" ? item.capacidad : "N/A"}</Text>
-                  <TouchableOpacity
-                    style={{
-                      borderRadius: 5,
-                      width: "35%",
-                      backgroundColor: "blue",
-                    }}
-                    onPress={() => handlePress(item.lng, item.lat)}>
-                    <Text
-                      style={{
-                        color: "white",
-                        fontWeight: "bold", backgroundColor: "blue", textAlign: "center"
-                      }}
-                    >Abrir Mapa</Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            </View>
-          )}
-        />
+        {
+          fetching ? <Loading showLoading={true} />
+            :
+            <MapView
+              style={styles.map}
+              initialRegion={{
+                latitude: 18.482443023578163,
+                longitude: -69.95184981233268,
+                latitudeDelta: 0.0922,
+                longitudeDelta: 0.0421,
+              }}
+            >
+              {
+                filteredDatos.map((data, key) => {
+                  return <Marker key={key}
+                    coordinate={{ latitude: Number(data.lng) , longitude: Number(data.lat) }}
+                    title={`${data.edificio} `}
+                    description={`Telefono: ${data.telefono}`}
+                  />
+                })
+              }
+            </MapView>
+        }
       </View>
     </Container>
   );
@@ -160,6 +138,11 @@ const styles = StyleSheet.create({
     padding: 20,
     flexDirection: "column",
     flex: 1,
+  },
+  map: {
+
+    width: "100%",
+    height: "80%"
   },
   option: {
     flexDirection: "column",

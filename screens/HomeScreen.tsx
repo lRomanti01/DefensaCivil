@@ -45,7 +45,7 @@ export default function HomeScreen({ navigation }) {
     },
     {
       name: "Mapa de Albergues",
-      router: "",
+      router: "MapaAlbergueScreen",
       image: require("../assets/images/albergueMap.png"),
     },
     {

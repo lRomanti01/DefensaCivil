@@ -13,11 +13,7 @@ import AdsContainer from "../components/AdsContainer";
 
 export default function HomeScreen({ navigation }) {
   const MenuItems = [
-    {
-      name: "Acciones",
-      router: "",
-      image: require("../assets/images/accion.png"),
-    },
+    
     {
       name: "Historia",
       router: "HistoriaScreen",

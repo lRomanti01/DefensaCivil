@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Image,
@@ -9,12 +9,33 @@ import {
 } from "react-native";
 
 interface AdsContainerProps {
-  img: any; 
+  img: any;
   website: string;
 }
+const images = [
+  { id: 1, url: require('../assets/slider/Bannerprincipal.jpg') },
+  { id: 2, url: require('../assets/slider/COMISIONWEBBANNER.png') },
+  { id: 3, url: require('../assets/slider/CartaBanner.png') },
+  { id: 4, url: require('../assets/slider/slider_escuela_2.jpg') },
+  // Agrega más imágenes si es necesario
+];
 
 export default function AdsContainer({ img, website }: AdsContainerProps) {
   const [data, setData] = useState<string>(website);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      // Cambiar al siguiente índice
+      setCurrentIndex((prevIndex) =>
+        prevIndex === images.length - 1 ? 0 : prevIndex + 1
+      );
+      console.log(currentIndex)
+
+    }, 5000); // Cambiar cada 1 minuto (60000 milisegundos)
+
+    return () => clearInterval(interval); // Limpiar el intervalo al desmontar
+  }, []);
 
   const open = async () => {
     if (data) {
@@ -44,9 +65,9 @@ export default function AdsContainer({ img, website }: AdsContainerProps) {
   return (
     <View>
       <View style={styles.headerImage}>
-        <TouchableOpacity onPress={open}>
-          <Image style={styles.image} source={img} />
-        </TouchableOpacity>
+
+        <Image style={styles.image} source={images[currentIndex].url} />
+
       </View>
     </View>
   );

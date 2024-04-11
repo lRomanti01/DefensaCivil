@@ -13,14 +13,10 @@ import AdsContainer from "../components/AdsContainer";
 
 export default function HomeScreen({ navigation }) {
   const MenuItems = [
-    {
-      name: "Acciones",
-      router: "",
-      image: require("../assets/images/accion.png"),
-    },
+    
     {
       name: "Historia",
-      router: "",
+      router: "HistoriaScreen",
       image: require("../assets/images/historia.png"),
     },
     {
@@ -40,12 +36,12 @@ export default function HomeScreen({ navigation }) {
     },
     {
       name: "Albergues",
-      router: "",
+      router: "AlbergueScreen",
       image: require("../assets/images/albergue.png"),
     },
     {
       name: "Mapa de Albergues",
-      router: "",
+      router: "MapaAlbergueScreen",
       image: require("../assets/images/albergueMap.png"),
     },
     {

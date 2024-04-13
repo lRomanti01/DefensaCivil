@@ -247,7 +247,7 @@ export default function SignUpScreen({ navigation }: any) {
                 handleBlur={handleBlur}
                 value={values.confirmarClave}
                 label={"Confimar contraseña"}
-                name={"passwordConfirmation"}
+                name={"confirmarClave"}
               />
             </ScrollView>
 

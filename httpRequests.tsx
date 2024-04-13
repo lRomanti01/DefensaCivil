@@ -31,7 +31,7 @@ const fetchData = async (url: string) => {
 const sendData = async (url: string, data: object) => {
   try {
     
-    const requestOptions = {
+    const requestOptions: object = {
       method: "POST",
       body: data,
       redirect: "follow"

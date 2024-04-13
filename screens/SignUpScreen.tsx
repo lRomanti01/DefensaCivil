@@ -170,12 +170,12 @@ export default function SignUpScreen({ navigation }: any) {
       <Formik
         validationSchema={validationSchema}
         initialValues={{
-          cedula: "40229298068",
-          correo: "romanti159@gmail.com",
-          nombre: "Romantiezer",
-          apellido: "Rodriguez",
-          clave: "Test123456",
-          confirmarClave: "Test123456",
+          cedula: "",
+          correo: "",
+          nombre: "",
+          apellido: "",
+          clave: "",
+          confirmarClave: "",
           telefono: "",
         }}
         onSubmit={(values: any) => onSignUp(values)}

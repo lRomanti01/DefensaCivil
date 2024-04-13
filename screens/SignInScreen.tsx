@@ -117,7 +117,7 @@ export default function SignInScreen({ navigation }: any) {
           <View style={styles.body}>
             <Text style={styles.title}>Login</Text>
             <Formik
-              initialValues={{ cedula: "40229298068", clave: "Test123456" }}
+              initialValues={{ cedula: "", clave: "" }}
               onSubmit={(values) => onSignIn(values)}
             >
               {({ handleChange, handleBlur, handleSubmit, values }) => (
